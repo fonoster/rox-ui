@@ -21,7 +21,7 @@ jobs:
 
       - name: Move HTML to dist 🔧
         run: |
-          mv ./infrastructure/ui/staging.html ./dist/index.html
+          mv ./src/infrastructure/ui/staging.html ./dist/index.html
 
       - name: Deploy to gh-pages for staging 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
