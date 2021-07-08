@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# This script evaluates your local branch to validate that it follows Roxanne naming rules.
+LC_ALL=C
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+conventional="(HEAD|develop|main|build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|release|wip)"
+
+team="Roxanne Rules"
+title="Oops! Your branch '$branch' doesn't seem to comply with the naming rules. \n"
+message="You should use something like: feat/your-branch-name \n Use one of these conventional commit prefixes: \n $conventional"
+
+if [[ ! $branch =~ $conventional ]]
+then
+  echo "❌  [$team]: $title"
+  echo "❌  [$team]: $message"
+  exit 1
+fi
+
+echo "✅  [$team]: Nice branch!"
+exit 0

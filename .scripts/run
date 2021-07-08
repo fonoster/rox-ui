@@ -1,0 +1,25 @@
+#!/bin/bash
+
+command=$1; shift;
+
+if [[ $command = "build" ]]; then
+  rimraf ./dist && parcel build ./src/core/widget.tsx --no-content-hash --no-source-maps
+  exit 0;
+fi
+
+if [[ $command = "start" ]]; then
+  rimraf ./static && parcel serve ./src/infrastructure/ui/local.html --port 3080 --no-source-maps --open --dist-dir static
+  exit 0;
+fi
+
+if [[ $command = "git:pre-commit" ]]; then
+  yarn git:branch && yarn lint:format && yarn lint:check && yarn lint:ts:check
+  exit 0;
+fi
+
+# Remove debug package to release prod - Linux only
+if [[ $command = "ci:no:debug" ]]; then
+  code="import('preact\/debug')"
+  sed -i "/$code/d" src/core/widget.tsx
+  exit 0;
+fi

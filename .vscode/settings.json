@@ -1,0 +1,17 @@
+{
+  "files.exclude": {
+    "**/.editorconfig": true,
+    "**/.eslint*": true,
+    "**/.git": true,
+    "**/.husky": true,
+    "**/.parcel-cache": true,
+    "**/.prettier*": true,
+    "**/dist": true,
+    "**/jest*": true,
+    "**/node_modules": true,
+    "**/static": true,
+    "**/tsconfig.tsbuildinfo": true,
+    "**/yarn-error.log": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

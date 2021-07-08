@@ -1,0 +1,22 @@
+/node_modules
+/.cache
+.DS_Store
+
+# Logs
+yarn-*
+
+# Env
+/.env*
+
+# Builds
+**/build
+**/dist
+**/tsconfig.tsbuildinfo
+/static
+
+# Husky
+.husky/_
+.husky/.gitignore
+
+# Parcel
+.parcel-cache/
