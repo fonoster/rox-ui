@@ -1,0 +1,26 @@
+// Color palettes
+$purple: #4746d4;
+$white: #fff;
+$gray: #565757;
+$gray-light: #858b9b;
+$gray-lighter: #f2f2f2;
+$danger: #ff525d;
+
+$primary-color: $purple;
+$default-text-color: $gray-light;
+
+// Fonts
+$font-bold: 'Circular Std', sans-serif;
+$font-book: 'Circular Std Book', sans-serif;
+$default-font: $font-book;
+
+@mixin in-mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@keyframes loaded {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

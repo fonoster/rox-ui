@@ -1,0 +1,18 @@
+#!/bin/bash
+
+build() {
+  local ENTRY_POINT=$1
+  local STYLES=$2
+
+  [[ -z "$*" ]] && error "No arguments provided"
+
+  info "Building the typescript application and resources, from the entry point: $ENTRY_POINT"
+
+  rimraf ./dist
+  parcel build "$ENTRY_POINT" --no-content-hash --no-source-maps
+
+  info "Building styles, from the entry point: $STYLES"
+  parcel build "$STYLES" --no-content-hash --no-source-maps
+
+  exit 0
+}

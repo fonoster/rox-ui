@@ -1,0 +1,19 @@
+#!/bin/bash
+
+prepare_staging() {
+  info "Deploying to stage envinronment... 🚀 "
+
+  info "Install Dependencies 🔧"
+  yarn install
+
+  if [[ ! -f app.config.json ]]; then
+    info "Copying the stage configuration... 🔧"
+    cp ./.config/staging.config.json ./app.config.json
+  fi
+
+  info "Build and remove debugging dependencies 🔧"
+  yarn ci:build
+
+  info "Move staging.html to root 🔧"
+  mv ./public/staging.html ./dist/index.html
+}
