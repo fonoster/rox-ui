@@ -2,7 +2,7 @@ import { h } from 'preact'
 import { useMemo, useRef, useState } from 'preact/hooks'
 
 import { ERROR_MESSAGES } from '../../data'
-import { NavigatorContext } from './Context'
+import { NavigatorContext } from './NavigatorContext'
 import { navigatorWarnings } from './navigatorWarnings'
 import type { SCREEN_NAMES } from './ScreenNames'
 import type { INavigatorProps } from './types'
@@ -10,7 +10,9 @@ import type { INavigatorProps } from './types'
 /**
  * Navigator Provider
  *
- * @description text
+ * @description Provides a way for your app to transition between screens with
+ * a simple implementation because it doesn't seem necessary to
+ * install a larger library to manage screens.
  *
  * @author Fonoster
  */

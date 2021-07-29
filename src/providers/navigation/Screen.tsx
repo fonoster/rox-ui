@@ -5,7 +5,7 @@ import type { TScreenProps } from './types'
 /**
  * Navigator Screen
  *
- * @description text
+ * @description Empty component used for specifying route configuration.
  *
  * @author Fonoster
  */

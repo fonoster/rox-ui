@@ -1,7 +1,7 @@
 import { Fragment, FunctionalComponent, h } from 'preact'
 import { useState } from 'preact/hooks'
 
-import { Navigator, Screen, SCREEN_NAMES } from './providers/navigator'
+import { Navigator, Screen, SCREEN_NAMES } from './providers/navigation'
 import { VisibilityEvent } from './services/event-bus'
 import { BoxPortal } from './ui/components/box'
 import { LauncherPortal } from './ui/components/launcher'
