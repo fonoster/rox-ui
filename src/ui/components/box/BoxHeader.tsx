@@ -1,7 +1,7 @@
 import { h } from 'preact'
 
+import { TSetVisibilityProps } from '../../../@types/shared'
 import { MESSAGES } from '../../../data'
-import { TSetVisibilityProps } from '../../../interfaces'
 import { CloseIcon, FonosterLogo } from '../svg'
 
 export const BoxHeader = ({ setVisibility }: TSetVisibilityProps) => (

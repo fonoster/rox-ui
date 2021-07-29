@@ -1,6 +1,6 @@
 import { h } from 'preact'
 
-import { IVisibilityProps } from '../../../interfaces'
+import { IVisibilityProps } from '../../../@types/shared'
 import * as styles from '../../styles/portals/assistant.module.scss'
 import { Portal } from '../portal'
 import { BoxFooter } from './BoxFooter'

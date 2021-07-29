@@ -1,7 +1,7 @@
 import { h } from 'preact'
 
+import { IVisibilityProps } from '../../../@types/shared'
 import { MESSAGES } from '../../../data'
-import { IVisibilityProps } from '../../../interfaces'
 import * as styles from '../../styles/portals/launcher.module.scss'
 import { FloatingButton } from '../floating-button'
 import { Portal } from '../portal'
