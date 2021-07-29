@@ -1,6 +1,7 @@
 import { Fragment, FunctionalComponent, h } from 'preact'
 import { useState } from 'preact/hooks'
 
+import { Navigator, Screen, SCREEN_NAMES } from './providers/navigator'
 import { VisibilityEvent } from './services/event-bus'
 import { BoxPortal } from './ui/components/box'
 import { LauncherPortal } from './ui/components/launcher'
@@ -27,7 +28,14 @@ export const App: FunctionalComponent<AppProps> = () => {
 
   return (
     <Fragment>
-      <BoxPortal {...params} />
+      <BoxPortal {...params}>
+        <Navigator initialScreen={SCREEN_NAMES.LISTENING}>
+          <Screen
+            name={SCREEN_NAMES.LISTENING}
+            component={() => <p>Hello</p>}
+          />
+        </Navigator>
+      </BoxPortal>
       <LauncherPortal {...params} />
     </Fragment>
   )
