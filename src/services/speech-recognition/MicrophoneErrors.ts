@@ -27,7 +27,7 @@ export class ErrorNotSupported extends Error {
 
 export class ErrorNotImplemented extends Error {
   constructor() {
-    super('This method has not been implemented')
+    super("This method hasn't been implemented")
   }
 }
 

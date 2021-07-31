@@ -1,7 +1,5 @@
 export * from './BrowserMedia'
 export * from './Microphone'
 export * from './MicrophoneErrors'
-export * from './SpeechContext'
-export * from './SpeechProvider'
 export * from './SpeechRecognition'
 export * from './types'

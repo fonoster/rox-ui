@@ -1,4 +1,4 @@
-import { Intent } from '../providers/speech'
+import { Intent } from '../services/speech-recognition'
 
 export class SpeechRecognitionAPI {
   public static connect(accessKey: string) {

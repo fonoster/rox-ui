@@ -1,7 +1,7 @@
 import { useContext } from 'preact/hooks'
 
 import { ERROR_MESSAGES } from '../data'
-import { SpeechContext } from '../providers/speech'
+import { SpeechContext } from '../providers/speech-recognition'
 
 /**
  * use Speech Recognition

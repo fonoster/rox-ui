@@ -1,5 +1,5 @@
-import type { TGetUserMedia } from '../../providers/speech'
 import type { EventName } from '../../services/event-bus'
+import type { TGetUserMedia } from '../../services/speech-recognition'
 
 declare global {
   interface Window {

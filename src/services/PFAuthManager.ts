@@ -1,6 +1,6 @@
 import { __DEV__, APP_CONFIG, PF_ACCESS_KEY } from '../config'
 import { ERROR_MESSAGES } from '../data'
-import { ErrorNotImplemented } from '../providers/speech'
+import { ErrorNotImplemented } from './speech-recognition'
 
 /**
  * PF Authentication Manager
