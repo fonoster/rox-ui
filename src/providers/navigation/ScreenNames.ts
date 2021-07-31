@@ -1,5 +1,5 @@
 export enum SCREEN_NAMES {
-  LISTENING = 'app.listening',
+  SPEECH = 'app.speech.recognition',
   PERMISSIONS = 'app.permissions',
   INTENTS = 'app.intents',
 }

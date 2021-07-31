@@ -9,6 +9,7 @@ export const ERROR_MESSAGES = {
     'A <Navigator /> can only contain "<Screen />" as its direct children',
   NAVIGATOR_NO_CHILDREN:
     'It seems that <Navigator /> has no children. You must add at least one child',
-  OUTSIDE_NAVIGATOR:
-    "Couldn't find a navigator context. Is your component inside a screen in a navigator?",
+  DEVICE_NOT_SUPPORTED: 'Current device does not support microphone API',
+  OUTSIDE_OF_PROVIDER:
+    "Couldn't find a context. Is your component outside a <Screen />?",
 }

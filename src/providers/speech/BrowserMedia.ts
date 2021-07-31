@@ -1,4 +1,4 @@
-import { ErrorNotSupported } from './errors'
+import { ErrorNotSupported } from './MicrophoneErrors'
 import type { MediaStreamConstraints } from './types'
 
 /**
