@@ -1,6 +1,6 @@
 import { PFAssistant } from './Assistant'
 import { eventBus } from './services/event-bus'
-import { PFAuthManager } from './services/PFAuthManager'
+import { PFAuthManager } from './services/fonos'
 
 const accessKey = PFAuthManager.getKeyFromScript()
 

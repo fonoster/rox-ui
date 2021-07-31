@@ -5,9 +5,11 @@
  *
  * @author Fonoster
  */
-export class ErrorMicroNotInitialized extends Error {
+export class ErrorNotInitialized extends Error {
   constructor() {
-    super('The microphone is not initialized')
+    super(
+      'The microphone is not receiving audio, call "start()" method to start receiving'
+    )
   }
 }
 
@@ -42,7 +44,7 @@ export class ErrorNotImplemented extends Error {
 export class ErrorAlreadyInitialized extends Error {
   constructor() {
     super(
-      'The microphone is already initialized, call the "stop()" method before starting the microphone again.'
+      'The microphone is already initialized, call "stop()" method before starting the microphone again.'
     )
   }
 }

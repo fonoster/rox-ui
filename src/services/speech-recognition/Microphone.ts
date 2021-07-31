@@ -4,15 +4,16 @@ import { Readable } from 'readable-stream'
 import { BrowserMedia } from './BrowserMedia'
 import {
   ErrorAlreadyInitialized,
-  ErrorMicroNotInitialized,
+  ErrorNotInitialized,
 } from './MicrophoneErrors'
 import type { MediaStreamConstraints } from './types'
 
 /**
  * Microphone
  *
- * @description Turns a MediaStream object (from getUserMedia) into a NodeJS
- * Readable stream and optionally converts the audio to Buffers.
+ * @description It is an abstraction and a polyfill of the microphone, at the same time
+ * configuring an audio processor to convert from MediaStream to ReadableStream
+ * and adding friendly methods to interact with the audio processor.
  *
  * @author Fonoster
  */
@@ -25,22 +26,15 @@ export class Microphone extends Readable {
     outputChannels: 1,
   }
 
-  private isRecording: boolean = true
+  private isStreaming: boolean
   private recorder: ScriptProcessorNode
   private audioInput: MediaStreamAudioSourceNode
   private browserMedia: BrowserMedia
+  private stream: MediaStream
 
   public context: AudioContext
   public isInitialized: boolean
   public hasPermissions: boolean | null = null
-
-  /**
-   * Stream
-   *
-   * @description Represents a stream of media content. A stream consists
-   * of several tracks such as audio tracks.
-   */
-  private stream: MediaStream
 
   constructor() {
     super({ objectMode: Microphone.meta.objectMode })
@@ -49,11 +43,13 @@ export class Microphone extends Readable {
   }
 
   /**
-   * Initializes the microphone.
+   * Start receiving audio
    *
-   * @description This should prepare the microphone infrastructure for receiving audio chunks.
+   * @description It prepares the microphone context to receive audio fragments,
+   * its implementation will try to obtain the consent of the user to use
+   * the microphone and initialize the audio processor.
    */
-  public async initialize(): Promise<void> {
+  public async start(): Promise<void> {
     if (this.isInitialized) throw new ErrorAlreadyInitialized()
 
     try {
@@ -61,13 +57,7 @@ export class Microphone extends Readable {
 
       this.context = this.getAudioContext()
 
-      this.recorder = this.context.createScriptProcessor(
-        Microphone.bufferSize,
-        Microphone.meta.inputChannels,
-        Microphone.meta.outputChannels
-      )
-
-      this.recorder.connect(this.context.destination)
+      this.setRecorder()
 
       const stream = await this.browserMedia.getStream()
       this.setStream(stream)
@@ -82,22 +72,27 @@ export class Microphone extends Readable {
   }
 
   /**
-   * Subscribe to data event
+   * Listen available audio
    *
    * @description Emits either a Buffer with raw 32-bit Floating point audio data,
    * or if objectMode is set, an AudioBuffer containing the data and metadata.
    */
-  public subscribe(cb: (chunk: Buffer) => void) {
+  public listen(cb: (audio: Buffer) => void): void {
     this.useInitialized(() => this.on('data', cb))
   }
 
   /**
-   * Stops the recording
+   * Stop receiving audio
+   *
+   * @description It destroys the current audio session so you should keep in mind
+   * that it should not be used to mute the microphone or something.
+   *
+   * Use it only when you are sure you want to stop receiving audio.
    */
-  public async stop() {
+  public async stop(): Promise<void> {
     this.useInitialized(async () => {
       try {
-        if (this.context.state === 'closed') return
+        if (this.context?.state === 'closed') return
 
         this.mute()
 
@@ -120,47 +115,86 @@ export class Microphone extends Readable {
   }
 
   /**
-   * Mute Recording
+   * Mute streaming audio
    *
-   * @description Temporarily stop emitting new data. Audio data received
-   * from the microphone after this will be dropped.
+   * @description Stop emitting audio temporarily. Audio data received from the
+   * microphone after this will not be sent to the listening method.
    */
   public mute(): void {
-    this.isRecording = false
+    this.isStreaming = false
   }
 
   /**
-   * Unmute Recording
+   * Resume streaming audio
    *
-   * @description Resume emitting new audio data after mute() was called.
+   * @description Resume emitting audio after mute() was called.
    */
   public unmute(): void {
-    this.isRecording = true
+    this.isStreaming = true
   }
 
+  /**
+   * Audio Processor
+   *
+   * @description It allows the generation, processing, and analysis of audio.
+   *
+   * @todo ScriptProcessorNode was replaced by AudioWorklet, I have to do
+   * the recorder implementation with AudioWorklet.
+   */
+  private setRecorder(): void {
+    this.useInitialized(() => {
+      this.recorder = this.context.createScriptProcessor(
+        Microphone.bufferSize,
+        Microphone.meta.inputChannels,
+        Microphone.meta.outputChannels
+      )
+
+      this.recorder.connect(this.context.destination)
+
+      this.recorder.onaudioprocess = e => {
+        if (!this.isStreaming) return
+
+        const buffer: Buffer | AudioBuffer = Microphone.meta.objectMode
+          ? e.inputBuffer
+          : bufferFrom(e.inputBuffer.getChannelData(0).buffer)
+
+        this.push(buffer)
+      }
+    })
+  }
+
+  /**
+   * Stream
+   *
+   * @description This method is called by "start()" when it gets the user's consent to
+   * use the microphone, sets the tracks, and starts streaming audio.
+   */
   private setStream(stream: MediaStream): void {
     this.stream = stream
     this.audioInput = this.context.createMediaStreamSource(stream)
     this.audioInput.connect(this.recorder)
 
-    this.recorder.onaudioprocess = e => {
-      if (this.isRecording) {
-        this.push(
-          Microphone.meta.objectMode
-            ? e.inputBuffer
-            : bufferFrom(e.inputBuffer.getChannelData(0).buffer)
-        )
-      }
-    }
+    this.unmute()
   }
 
-  private useInitialized(next: Function) {
-    if (!this.isInitialized) throw new ErrorMicroNotInitialized()
+  /**
+   * The instance started
+   *
+   * @description A kind of middleware for actions that should be executed
+   * only when the instance has been initialized.
+   */
+  private useInitialized(next: Function): void {
+    if (!this.isInitialized) throw new ErrorNotInitialized()
 
     next()
   }
 
-  private emitFormat() {
+  /**
+   * Audio format
+   *
+   * @description One-time event with details of the audio format.
+   */
+  private emitFormat(): void {
     setTimeout(() => {
       this.emit('format', {
         channels: 1,
@@ -172,10 +206,21 @@ export class Microphone extends Readable {
     }, 0)
   }
 
+  /**
+   * Buffer size
+   *
+   * @description If the browser is webkit, it requires that you set the buffer size.
+   */
   private static get bufferSize() {
-    return typeof window.AudioContext === 'undefined' ? 4096 : undefined
+    return window.webkitAudioContext ? 4096 : undefined
   }
 
+  /**
+   * Stream constraints
+   *
+   * @description is used when calling getUserMedia() to specify what kinds of tracks
+   * should be included in the returned MediaStream.
+   */
   private get constraints(): MediaStreamConstraints {
     return Object.freeze({
       audio: true,
@@ -189,18 +234,24 @@ export class Microphone extends Readable {
    * @description An audio-processing graph built from audio modules linked together,
    * each represented by an AudioNode.
    */
-  private getAudioContext() {
+  private getAudioContext(): AudioContext {
     return new (window.AudioContext || window.webkitAudioContext)()
   }
 
+  /**
+   * _read Inherit
+   *
+   * @throws This method is inherited but not implemented as
+   * flow control doesn't work on streaming audio.
+   */
+  public _read(): void {}
+
+  /**
+   * Singleton instance
+   *
+   * @description Get a single instance of the microphone to avoid audio processor conflicts.
+   */
   public static get instance(): Microphone {
     return this._instance ?? (this._instance = new Microphone())
   }
-
-  /**
-   * This method is not implemented.
-   *
-   * @throws (flow-control doesn't really work on live audio).
-   */
-  public _read(): void {}
 }

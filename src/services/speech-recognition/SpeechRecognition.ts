@@ -1,12 +1,7 @@
-import { SpeechRecognitionAPI } from '../../api'
+import { speechAPI } from '../fonos'
 import { Microphone } from './Microphone'
 import { Intent } from './types'
 
-/**
- * @todo Use the eventBus to fire DOM events.
- *
- * @todo Move setVisibility to a context and stop streaming audio when the widget is closed.
- */
 class SpeechRecognition {
   private static _instance: SpeechRecognition
   private readonly microphone: Microphone
@@ -22,27 +17,27 @@ class SpeechRecognition {
    * and establishing connection to the API.
    */
   public async start(): Promise<void> {
-    const isConnected = SpeechRecognitionAPI.connect('1234')
+    const isConnected = await speechAPI.connect('1234')
 
     if (!isConnected) throw new Error('...')
 
-    this.microphone.initialize()
+    this.microphone.start()
 
-    this.microphone.subscribe(SpeechRecognitionAPI.streamingRecognize)
+    this.microphone.listen(speechAPI.recognizer)
   }
 
   /**
    * Adds a listener for intent responses from the API.
    */
   public onIntent(cb: (intent: Intent) => void): void {
-    SpeechRecognitionAPI.onIntent(cb)
+    speechAPI.onIntent(cb)
   }
 
   /**
    * Adds a listener for waiting event from the API.
    */
   public onWaiting(cb: (isWaiting: boolean) => void): void {
-    SpeechRecognitionAPI.onWaiting(cb)
+    speechAPI.onWaiting(cb)
   }
 
   /**
@@ -51,7 +46,7 @@ class SpeechRecognition {
   public async stop(): Promise<void> {
     await this.microphone.stop()
 
-    await SpeechRecognitionAPI.closeConnection()
+    await speechAPI.closeConnection()
   }
 
   public static get instance(): SpeechRecognition {
