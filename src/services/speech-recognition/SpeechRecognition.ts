@@ -4,7 +4,7 @@ import {
   speechStartEvent,
   speechStopEvent,
 } from '../event-bus'
-import { speechIntentsEvent } from '../event-bus/events/SpeechIntentsEvent'
+import { speechIntentsEvent } from '../event-bus/events'
 import { speechAPI } from '../fonos'
 import { Microphone } from './Microphone'
 import type { OnIntentsCallback, OnWaitingCallback } from './types'

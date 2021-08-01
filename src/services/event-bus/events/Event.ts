@@ -9,7 +9,7 @@ import type { EventCallback } from '../types'
  *
  * @author Fonoster
  */
-export abstract class AssistantEvent<P> {
+export class AssistantEvent<P> {
   constructor(private readonly event: EventName) {}
 
   /**

@@ -120,15 +120,6 @@ export class Microphone extends Readable {
   }
 
   /**
-   * Speech Permission
-   *
-   * @description Change permission state of the current context.
-   */
-  private setPermission(state: SpeechPermission): void {
-    this.speechPermission = state
-  }
-
-  /**
    * Mute streaming audio
    *
    * @description Stop emitting audio temporarily. Audio data received from the
@@ -145,6 +136,15 @@ export class Microphone extends Readable {
    */
   public unmute(): void {
     this.isStreaming = true
+  }
+
+  /**
+   * Speech Permission
+   *
+   * @description Change permission state of the current context.
+   */
+  private setPermission(state: SpeechPermission): void {
+    this.speechPermission = state
   }
 
   /**

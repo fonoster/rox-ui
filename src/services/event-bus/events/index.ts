@@ -1,5 +1,2 @@
-export * from './SpeechMuteEvent'
-export * from './SpeechResumeEvent'
-export * from './SpeechStartEvent'
-export * from './SpeechStopEvent'
-export * from './VisibilityEvent'
+export * from './AssistantEvents'
+export * from './SpeechEvents'
