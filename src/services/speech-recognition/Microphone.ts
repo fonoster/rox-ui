@@ -24,10 +24,10 @@ export class Microphone extends Readable {
   }
 
   private isStreaming: boolean
-  private recorder: ScriptProcessorNode
+  private recorder?: ScriptProcessorNode
   private audioInput: MediaStreamAudioSourceNode
   private browserMedia: BrowserMedia
-  private stream: MediaStream
+  private stream?: MediaStream
 
   public context: AudioContext
   public isStarted: boolean
@@ -101,17 +101,18 @@ export class Microphone extends Readable {
 
         this.mute()
 
-        this.isStarted = false
-
         this.recorder?.disconnect()
 
         this.audioInput?.disconnect()
 
-        this.stream.getTracks().forEach(t => t.stop())
+        this.stream?.getTracks().forEach(t => t.stop())
 
         await this.context?.close()
 
-        this.push(null)
+        this.isStarted = false
+        this.stream = undefined
+        this.recorder = undefined
+
         this.emit('close')
       } catch (err) {
         console.error(err)
@@ -184,6 +185,8 @@ export class Microphone extends Readable {
    * use the microphone, sets the tracks, and starts streaming audio.
    */
   private setStream(stream: MediaStream): void {
+    if (!this.recorder) return
+
     this.stream = stream
     this.audioInput = this.context.createMediaStreamSource(stream)
     this.audioInput.connect(this.recorder)
