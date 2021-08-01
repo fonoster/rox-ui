@@ -1,19 +1,20 @@
 import { ERROR_MESSAGES } from '../../data'
 import type { EventName } from './EventName'
+import type { EventCallback } from './types'
 
 export class EventBus {
   private assistant: HTMLDivElement
   private static _instance: EventBus
 
-  public dispatch(event: EventName, detail?: Record<string, unknown>) {
+  public dispatch<P>(event: EventName, detail?: P) {
     this.assistant?.dispatchEvent(new CustomEvent(event, { detail }))
   }
 
-  public subscribe(event: EventName, cb: (e: CustomEvent) => void) {
+  public subscribe<P>(event: EventName, cb: EventCallback<P>) {
     this.assistant?.addEventListener(event, cb)
   }
 
-  public unsubscribe(event: EventName, cb: (e: CustomEvent) => void) {
+  public unsubscribe<P>(event: EventName, cb: EventCallback<P>) {
     this.assistant?.removeEventListener(event, cb)
   }
 

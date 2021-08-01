@@ -1,27 +1,22 @@
-import { eventBus } from '../EventBus'
 import { EventName } from '../EventName'
+import { AssistantEvent } from './Event'
 
-export type VisibilityPayload = {
+type Payload = {
   isOpen: boolean
   selector?: string
 }
 
-export class VisibilityEvent {
-  private static event = EventName.VISIBILITY
-
-  static dispatch(data: VisibilityPayload) {
-    eventBus.dispatch(this.event, data)
-  }
-
-  /**
-   * Subscribe method
-   *
-   * @returns {Function} A function that removes the event listener in target's event
-   * listener list with the same type, callback, and options.
-   */
-  static subscribe(cb: (e: CustomEvent<VisibilityPayload>) => void): Function {
-    eventBus.subscribe(this.event, cb)
-
-    return () => eventBus.unsubscribe(this.event, cb)
+/**
+ * Visibility Event
+ *
+ * @description Fired when the visibility of assistant changes state.
+ *
+ * @author Fonoster
+ */
+class VisibilityEvent extends AssistantEvent<Payload> {
+  constructor() {
+    super(EventName.VISIBILITY)
   }
 }
+
+export const visibilityEvent = new VisibilityEvent()

@@ -1,4 +1,9 @@
-import { Intent } from '../speech-recognition'
+import type {
+  Intent,
+  OnIntentsCallback,
+  OnWaitingCallback,
+  SpeechError,
+} from '../speech-recognition'
 
 class SpeechAPI {
   private static _instance: SpeechAPI
@@ -22,21 +27,28 @@ class SpeechAPI {
     return isConnected
   }
 
-  public onIntent(cb: (intent: Intent) => void): void {
-    const intent: Intent = {
-      id: 'pf.intent.add',
-      icon: 'https://fonoster.com/statics/icon.png',
-      title: 'Test',
-      description: 'Description...',
-      transcript: 'Text...',
+  public onIntents(cb: OnIntentsCallback): void {
+    const intents: Intent[] = [
+      {
+        id: 'pf.intent.add',
+        icon: 'https://fonoster.com/statics/icon.png',
+        title: 'Test',
+        description: 'Description...',
+        transcript: 'Text...',
+      },
+    ]
+
+    const error: SpeechError | undefined = {
+      statusCode: 404,
+      message: 'Oops!, I haven’t found anything',
     }
 
     // ...
 
-    cb(intent)
+    cb(intents, error)
   }
 
-  public onWaiting(cb: (isWaiting: boolean) => void): void {
+  public onWaiting(cb: OnWaitingCallback): void {
     // ...
 
     const isWait = true

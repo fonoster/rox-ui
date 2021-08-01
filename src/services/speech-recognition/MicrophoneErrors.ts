@@ -1,11 +1,11 @@
 /**
- * Microphone errors (Not initialized)
+ * Microphone errors (Not started)
  *
- * @description Error to be thrown when the microphone was accessed before it was initialized.
+ * @description Error to be thrown when the microphone was accessed before it was started.
  *
  * @author Fonoster
  */
-export class ErrorNotInitialized extends Error {
+export class ErrorNotStarted extends Error {
   constructor() {
     super(
       'The microphone is not receiving audio, call "start()" method to start receiving'
@@ -34,17 +34,17 @@ export class ErrorNotImplemented extends Error {
 }
 
 /**
- * Microphone errors (Already initialized)
+ * Microphone errors (Already started)
  *
- * @description Error to be thrown when the initialize method of a
+ * @description Error to be thrown when the "start()" method of a
  * Microphone instance is called more than once.
  *
  * @author Fonoster
  */
-export class ErrorAlreadyInitialized extends Error {
+export class ErrorAlreadyStarted extends Error {
   constructor() {
     super(
-      'The microphone is already initialized, call "stop()" method before starting the microphone again.'
+      'The microphone is already started, call "stop()" method before starting the microphone again.'
     )
   }
 }

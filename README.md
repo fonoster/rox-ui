@@ -45,20 +45,14 @@ You just need to add the script on your website or app with the `key` provided b
 Roxanne Assistant provides custom events for most widget actions. Generally,
 these are loaded with data related to the event and the current state of the widget.
 
-
-| Event                   | Description                                                                             |
-|-------------------------|-----------------------------------------------------------------------------------------|
-| `pf.widget.visibility`  | This event fires immediately when the widget is open or close.                          |
-| `pf.widget.speech`      | This event fires immediately when the widget is listening or stops.                     |
-| `pf.widget.waiting`     | This event fires immediately when the widget is waiting for data.                       |
-| `pf.widget.greeted`     | This event fires when the user hasn't interacted with Roxanne after a while on website. |
+> To view all available events, see: [Roxanne - DOM Events](/src/services/event-bus/EventName.ts)
 
 Example:
 
 ```javascript
 const widget = document.getElementById("__pf_assistant_widget__");
 
-widget.addEventListener("pf.widget.visibility", e => console.log(e.detail));
+widget.addEventListener("pf.assistant.start", e => console.log(e.detail));
 ```
 
 #### Supported Browsers

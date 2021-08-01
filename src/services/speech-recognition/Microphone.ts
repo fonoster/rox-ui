@@ -2,11 +2,8 @@ import bufferFrom from 'buffer-from'
 import { Readable } from 'readable-stream'
 
 import { BrowserMedia } from './BrowserMedia'
-import {
-  ErrorAlreadyInitialized,
-  ErrorNotInitialized,
-} from './MicrophoneErrors'
-import type { MediaStreamConstraints } from './types'
+import { ErrorAlreadyStarted, ErrorNotStarted } from './MicrophoneErrors'
+import { MediaStreamConstraints, SpeechPermission } from './types'
 
 /**
  * Microphone
@@ -33,8 +30,15 @@ export class Microphone extends Readable {
   private stream: MediaStream
 
   public context: AudioContext
-  public isInitialized: boolean
-  public hasPermissions: boolean | null = null
+  public isStarted: boolean
+
+  /**
+   * Speech Permission
+   *
+   * @description The Permissions provides a consistent programmatic way to
+   * get the status of Speech permissions on the current context.
+   */
+  public speechPermission: SpeechPermission
 
   constructor() {
     super({ objectMode: Microphone.meta.objectMode })
@@ -50,24 +54,25 @@ export class Microphone extends Readable {
    * the microphone and initialize the audio processor.
    */
   public async start(): Promise<void> {
-    if (this.isInitialized) throw new ErrorAlreadyInitialized()
+    if (this.isStarted) throw new ErrorAlreadyStarted()
 
     try {
-      this.isInitialized = true
+      this.isStarted = true
 
       this.context = this.getAudioContext()
 
       this.setRecorder()
 
+      this.setPermission(SpeechPermission.PROMPT)
+
       const stream = await this.browserMedia.getStream()
       this.setStream(stream)
 
-      this.hasPermissions = Boolean(stream)
-
       this.emitFormat()
+
+      this.setPermission(SpeechPermission.GRANTED)
     } catch (err) {
-      this.hasPermissions = false
-      console.error(err)
+      this.setPermission(SpeechPermission.DENIED)
     }
   }
 
@@ -78,7 +83,7 @@ export class Microphone extends Readable {
    * or if objectMode is set, an AudioBuffer containing the data and metadata.
    */
   public listen(cb: (audio: Buffer) => void): void {
-    this.useInitialized(() => this.on('data', cb))
+    this.useStarted(() => this.on('data', cb))
   }
 
   /**
@@ -90,13 +95,13 @@ export class Microphone extends Readable {
    * Use it only when you are sure you want to stop receiving audio.
    */
   public async stop(): Promise<void> {
-    this.useInitialized(async () => {
+    this.useStarted(async () => {
       try {
         if (this.context?.state === 'closed') return
 
         this.mute()
 
-        this.isInitialized = false
+        this.isStarted = false
 
         this.recorder?.disconnect()
 
@@ -112,6 +117,15 @@ export class Microphone extends Readable {
         console.error(err)
       }
     })
+  }
+
+  /**
+   * Speech Permission
+   *
+   * @description Change permission state of the current context.
+   */
+  private setPermission(state: SpeechPermission): void {
+    this.speechPermission = state
   }
 
   /**
@@ -142,7 +156,7 @@ export class Microphone extends Readable {
    * the recorder implementation with AudioWorklet.
    */
   private setRecorder(): void {
-    this.useInitialized(() => {
+    this.useStarted(() => {
       this.recorder = this.context.createScriptProcessor(
         Microphone.bufferSize,
         Microphone.meta.inputChannels,
@@ -181,10 +195,10 @@ export class Microphone extends Readable {
    * The instance started
    *
    * @description A kind of middleware for actions that should be executed
-   * only when the instance has been initialized.
+   * only when the instance has been started.
    */
-  private useInitialized(next: Function): void {
-    if (!this.isInitialized) throw new ErrorNotInitialized()
+  private useStarted(next: Function): void {
+    if (!this.isStarted) throw new ErrorNotStarted()
 
     next()
   }

@@ -1,17 +1,17 @@
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
 
-import { VisibilityEvent } from '../../../services/event-bus'
+import { visibilityEvent } from '../../../services/event-bus'
 import { speechRecognition } from '../../../services/speech-recognition'
 
 export const SpeechRecognitionScreen = () => {
   useEffect(() => {
-    VisibilityEvent.subscribe(({ detail: { isOpen } }) => {
+    visibilityEvent.subscribe(({ detail: { isOpen } }) => {
       if (isOpen) {
         speechRecognition.start()
 
         speechRecognition.onWaiting(console.log)
-        speechRecognition.onIntent(console.log)
+        speechRecognition.onIntents(console.log)
       }
     })
 

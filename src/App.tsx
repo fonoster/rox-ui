@@ -1,7 +1,7 @@
 import { Fragment, FunctionalComponent, h } from 'preact'
 import { useState } from 'preact/hooks'
 
-import { VisibilityEvent } from './services/event-bus'
+import { visibilityEvent } from './services/event-bus'
 import { BoxPortal } from './ui/components/box'
 import { LauncherPortal } from './ui/components/launcher'
 import { Router } from './ui/router'
@@ -15,7 +15,7 @@ export const App: FunctionalComponent<AppProps> = () => {
 
   const setVisibility = () => {
     setOpen(prevOpen => {
-      VisibilityEvent.dispatch({ isOpen: !prevOpen })
+      visibilityEvent.dispatch({ isOpen: !prevOpen })
 
       return !prevOpen
     })
