@@ -65,7 +65,7 @@ widget.addEventListener("pf.widget.visibility", e => console.log(e.detail));
 
 Roxanne supports most modern browsers on mobile and desktop.
 
-This represents only a general part of the supported and tested browsers.
+> This represents only a general part of the supported and tested browsers.
 
 In general, any browser that supports the necessary APIs that Roxanne uses
 is supported but unknown. We did a great job with polyfills to support
@@ -74,7 +74,7 @@ their majority, but this will depend on the available APIs.
 | Browser                                       | Version | Supported              |
 |-----------------------------------------------|---------|:----------------------:|
 | Chrome                                        | 53+     | ✅                     |
-| Edge                                          | 12-92+  | ✅                     |
+| Edge                                          | 12+     | ✅                     |
 | Firefox                                       | 42+     | ✅                     |
 | Safari                                        | 11+     | ✅                     |
 | IE                                            | ALL     | `Not supported`        |
@@ -98,16 +98,6 @@ The following tools should be installed before starting:
 - Install deps `yarn install`
 - Run `yarn start`
 - Done!
-
-
-#### Notes
-
-> ##### Patch lines
-> If you encounter some lines with the following comment:
-> 
->     // @patch-line
-> 
-> You can read the file [patch-line](.scripts/commands/patch-line) that explains the meaning of these comments.
 
 ### Contributors
 
