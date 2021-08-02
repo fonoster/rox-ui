@@ -28,12 +28,39 @@ export class BrowserMedia {
   }
 
   /**
+   * Audio Context
+   *
+   * @description An audio-processing graph built from audio modules linked together,
+   * each represented by an AudioNode.
+   */
+  public getAudioContext(): AudioContext {
+    if (!BrowserMedia.isSupported) throw new ErrorNotSupported()
+
+    return new (window.AudioContext || window.webkitAudioContext)()
+  }
+
+  /**
+   * Speech API browser support
+   *
+   * @description Get a boolean regarding the current browser's compatibility with the
+   * APIs needed to implement the voice assistant.
+   */
+  public static get isSupported() {
+    const isMediaSupported = typeof this.media === 'function'
+    const isAudioSupported = Boolean(
+      window.AudioContext || window.webkitAudioContext
+    )
+
+    return isMediaSupported && isAudioSupported
+  }
+
+  /**
    * Get User Media
    *
    * @description This method prompts the user for permission to use a media input.
    * For browser compatibility, the Navigator.getUserMedia method must be wrapped in a promise.
    */
-  public async getUserMedia(): Promise<MediaStream> {
+  private async getUserMedia(): Promise<MediaStream> {
     if (!BrowserMedia.isSupported)
       return Promise.reject(new ErrorNotSupported())
 
@@ -53,26 +80,11 @@ export class BrowserMedia {
    * @description Try to find the getUserMedia method available in the current browser
    * based on its type and if it is supported.
    */
-  public static get media() {
+  private static get media() {
     return (
       navigator.getUserMedia ??
       navigator.webkitGetUserMedia ??
       navigator.mozGetUserMedia
     )
-  }
-
-  /**
-   * Speech API browser support
-   *
-   * @description Get a boolean regarding the current browser's compatibility with the
-   * APIs needed to implement the voice assistant.
-   */
-  public static get isSupported() {
-    const isMediaSupported = typeof this.media === 'function'
-    const isAudioSupported = Boolean(
-      window.AudioContext || window.webkitAudioContext
-    )
-
-    return isMediaSupported && isAudioSupported
   }
 }

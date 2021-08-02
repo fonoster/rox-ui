@@ -28,9 +28,7 @@ export const App: FunctionalComponent<AppProps> = () => {
 
   return (
     <Fragment>
-      <BoxPortal {...params}>
-        <Router />
-      </BoxPortal>
+      <BoxPortal {...params}>{isOpen && <Router />}</BoxPortal>
       <LauncherPortal {...params} />
     </Fragment>
   )

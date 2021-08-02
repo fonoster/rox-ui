@@ -1,12 +1,6 @@
-import {
-  speechMuteEvent,
-  speechResumeEvent,
-  speechStartEvent,
-  speechStopEvent,
-} from '../event-bus'
 import { speechIntentsEvent } from '../event-bus/events'
 import { speechAPI } from '../fonos'
-import { Microphone } from './Microphone'
+import { Microphone } from './microphone'
 import type { OnIntentsCallback, OnWaitingCallback } from './types'
 
 class SpeechRecognition {
@@ -29,11 +23,6 @@ class SpeechRecognition {
     if (!isConnected) throw new Error('...')
 
     this.microphone.start()
-
-    speechStartEvent.dispatch({
-      speechPermission: this.microphone.speechPermission,
-      audioContext: this.microphone.context,
-    })
 
     this.microphone.listen(speechAPI.recognizer)
   }
@@ -72,23 +61,15 @@ class SpeechRecognition {
     await this.microphone.stop()
 
     await speechAPI.closeConnection()
-
-    speechStopEvent.dispatch({
-      audioContext: this.microphone.context,
-    })
   }
 
   /**
-   * Mute recognition
+   * Pause recognition
    *
-   * @description Mute audio received temporarily from the microphone.
+   * @description Pause audio received temporarily from the microphone.
    */
-  public mute(): void {
-    this.microphone.mute()
-
-    speechMuteEvent.dispatch({
-      isStreaming: false,
-    })
+  public pause(): void {
+    this.microphone.pause()
   }
 
   /**
@@ -97,11 +78,7 @@ class SpeechRecognition {
    * @description Resume recognition audio after mute() was called.
    */
   public resume(): void {
-    this.microphone.unmute()
-
-    speechResumeEvent.dispatch({
-      isStreaming: true,
-    })
+    this.microphone.resume()
   }
 
   public static get instance(): SpeechRecognition {

@@ -3,25 +3,25 @@ import type { EventName } from './EventName'
 import type { EventCallback } from './types'
 
 export class EventBus {
-  private assistant: HTMLDivElement
+  private manager: HTMLDivElement
   private static _instance: EventBus
 
   public dispatch<P>(event: EventName, detail?: P) {
-    this.assistant?.dispatchEvent(new CustomEvent(event, { detail }))
+    this.manager?.dispatchEvent(new CustomEvent(event, { detail }))
   }
 
   public subscribe<P>(event: EventName, cb: EventCallback<P>) {
-    this.assistant?.addEventListener(event, cb)
+    this.manager?.addEventListener(event, cb)
   }
 
   public unsubscribe<P>(event: EventName, cb: EventCallback<P>) {
-    this.assistant?.removeEventListener(event, cb)
+    this.manager?.removeEventListener(event, cb)
   }
 
-  public set setAssistant(assistant: HTMLDivElement) {
-    if (!assistant) throw new Error(ERROR_MESSAGES.WIDGET_NO_LOADED)
+  public set setAssistant(manager: HTMLDivElement) {
+    if (!manager) throw new Error(ERROR_MESSAGES.WIDGET_NO_LOADED)
 
-    this.assistant = assistant
+    this.manager = manager
 
     window.__PF_ASSISTANT_LOADED__ = true
   }
