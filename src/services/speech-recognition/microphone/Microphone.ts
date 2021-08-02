@@ -8,14 +8,18 @@ import {
   speechStopEvent,
 } from '../../event-bus'
 import { BrowserMedia } from './BrowserMedia'
-import { ErrorAlreadyStarted, ErrorNotStarted } from './MicrophoneErrors'
+import {
+  ErrorAlreadyStarted,
+  ErrorNotStarted,
+  ErrorProcessorNotFound,
+} from './MicrophoneErrors'
 import { MediaStreamConstraints, SpeechPermission } from './types'
 
 /**
  * Microphone
  *
  * @description It is an abstraction and a polyfill of the microphone, at the same time
- * configuring an audio _processor to convert from MediaStream to ReadableStream
+ * configuring an audio processor to convert from MediaStream to ReadableStream
  * and adding friendly methods to interact with the audio processor.
  *
  * @author Fonoster
@@ -85,9 +89,9 @@ export class Microphone {
   /**
    * Start receiving audio
    *
-   * @description It prepares the microphone _context to receive audio fragments,
+   * @description It prepares the microphone context to receive audio fragments,
    * its implementation will try to obtain the consent of the user to use
-   * the microphone and initialize the audio _processor.
+   * the microphone and initialize the audio processor.
    */
   public async start(): Promise<void> {
     if (this.isStarted) throw new ErrorAlreadyStarted()
@@ -109,13 +113,13 @@ export class Microphone {
       this.emitFormat()
 
       this.setPermission(SpeechPermission.GRANTED)
-
+    } catch (err) {
+      this.setPermission(SpeechPermission.DENIED)
+    } finally {
       speechStartEvent.dispatch({
         speechPermission: this._speechPermission,
         audioContext: this._context,
       })
-    } catch (err) {
-      this.setPermission(SpeechPermission.DENIED)
     }
   }
 
@@ -186,7 +190,7 @@ export class Microphone {
   /**
    * Resume streaming audio
    *
-   * @description Resume emitting audio after pause() was called.
+   * @description Resume emitting audio after "pause()" was called.
    *
    * @param {boolean} dispatchEvent Dispatch event when listening audio is resume.
    */
@@ -225,7 +229,7 @@ export class Microphone {
   /**
    * Speech Permission
    *
-   * @description Change permission state of the current _context.
+   * @description Change permission state of the current context.
    */
   private setPermission(state: SpeechPermission): void {
     this._speechPermission = state
@@ -237,7 +241,7 @@ export class Microphone {
    * @description It allows the generation, processing, and analysis of audio.
    *
    * @todo ScriptProcessorNode was replaced by AudioWorklet, I have to do
-   * the _processor implementation with AudioWorklet.
+   * the processor implementation with AudioWorklet.
    */
   private setProcessor(): void {
     this.useStarted(() => {
@@ -268,7 +272,7 @@ export class Microphone {
    * use the microphone, sets the tracks, and starts streaming audio.
    */
   private setStream(stream: MediaStream): void {
-    if (!this._processor) return
+    if (!this._processor) throw new ErrorProcessorNotFound()
 
     this._stream = stream
     this._audioInput = this._context.createMediaStreamSource(stream)
@@ -318,7 +322,7 @@ export class Microphone {
   /**
    * Singleton instance
    *
-   * @description Get a single instance of the microphone to avoid audio _processor conflicts.
+   * @description Get a single instance of the microphone to avoid audio processor conflicts.
    */
   public static get instance(): Microphone {
     return this._instance ?? (this._instance = new Microphone())

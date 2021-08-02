@@ -27,9 +27,30 @@ export class ErrorNotSupported extends Error {
   }
 }
 
+/**
+ * Generic error (Not implemented)
+ *
+ * @description Error to be thrown when the current scope method is not implemented.
+ *
+ * @author Fonoster
+ */
 export class ErrorNotImplemented extends Error {
   constructor() {
     super("This method hasn't been implemented")
+  }
+}
+
+/**
+ * Microphone errors (Processor not found)
+ *
+ * @description Error to be thrown when the audio processor has not been set
+ * due to some unknown error. (This, in theory, should not happen).
+ *
+ * @author Fonoster
+ */
+export class ErrorProcessorNotFound extends Error {
+  constructor() {
+    super('Processor not found')
   }
 }
 
