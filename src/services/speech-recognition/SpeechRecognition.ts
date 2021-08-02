@@ -75,7 +75,7 @@ class SpeechRecognition {
   /**
    * Resume
    *
-   * @description Resume recognition audio after mute() was called.
+   * @description Resume recognition audio after "pause()" was called.
    */
   public resume(): void {
     this.microphone.resume()

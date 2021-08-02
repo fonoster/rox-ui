@@ -3,7 +3,7 @@ export enum EventName {
   SPEECH_WAITING = 'pf.assistant.waiting',
   SPEECH_START = 'pf.assistant.start',
   SPEECH_STOP = 'pf.assistant.stop',
-  SPEECH_MUTE = 'pf.assistant.mute',
+  SPEECH_PAUSE = 'pf.assistant.pause',
   SPEECH_RESUME = 'pf.assistant.resume',
   SPEECH_INTENTS = 'pf.assistant.intents',
 }

@@ -2,7 +2,7 @@ import bufferFrom from 'buffer-from'
 import { Readable } from 'readable-stream'
 
 import {
-  speechMuteEvent,
+  speechPauseEvent,
   speechResumeEvent,
   speechStartEvent,
   speechStopEvent,
@@ -178,7 +178,7 @@ export class Microphone {
     this.isStreaming = false
 
     if (dispatchEvent)
-      speechMuteEvent.dispatch({
+      speechPauseEvent.dispatch({
         isStreaming: this.isStreaming,
       })
   }

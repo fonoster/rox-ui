@@ -32,15 +32,15 @@ export const speechStopEvent = new AssistantEvent<{
 }>(EventName.SPEECH_STOP)
 
 /**
- * Speech Mute Event
+ * Speech Pause Event
  *
  * @description Fired when speech recognized by the speech recognition
  * service is temporarily has stopped being detected.
  *
  * @author Fonoster
  */
-export const speechMuteEvent = new AssistantEvent<{ isStreaming: boolean }>(
-  EventName.SPEECH_MUTE
+export const speechPauseEvent = new AssistantEvent<{ isStreaming: boolean }>(
+  EventName.SPEECH_PAUSE
 )
 
 /**
