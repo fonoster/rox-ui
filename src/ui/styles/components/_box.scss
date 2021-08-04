@@ -95,5 +95,35 @@ $block: 'pf-assistant';
     text-align: center;
     width: $size;
   }
+
+  &__title {
+    color: $gray;
+    font-family: $font-bold;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.32px;
+    line-height: 28px;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__text {
+    color: $default-text-color;
+    font-family: $default-font;
+    font-size: 16px;
+    letter-spacing: 0.26px;
+    line-height: 22px;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__subtitle {
+    color: $default-text-color;
+    font-family: $font-bold;
+    font-size: 16px;
+    letter-spacing: 0.26px;
+    line-height: 28px;
+    margin: 0;
+  }
 }
 

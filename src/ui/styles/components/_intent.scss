@@ -1,0 +1,38 @@
+$block: 'intent';
+
+.#{$block} {
+  align-items: center;
+  background: $white;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px #0000000a;
+  display: flex;
+  margin-bottom: 24px;
+  padding: 12px;
+
+  &__icon {
+    $size: 44px;
+    background-color: $gray-lighter;
+    height: $size;
+    margin-right: 12px;
+    min-width: $size;
+    width: $size;
+  }
+
+  &__title {
+    color: $gray;
+    font-family: $default-font;
+    font-size: 14px;
+    letter-spacing: 0.22px;
+    line-height: 22px;
+    margin: 0;
+    margin-bottom: 6px;
+  }
+
+  &__desc {
+    color: $default-text-color;
+    font-family: $default-font;
+    font-size: 12px;
+    letter-spacing: 0.17px;
+    line-height: 16px;
+  }
+}
