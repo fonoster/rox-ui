@@ -1,0 +1,23 @@
+{
+  "name": "@rox/web",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "parcel build src/web.ts --no-cache --no-content-hash --no-source-maps --dist-dir dist",
+    "build:styles": "parcel build src/ui/styles/*.scss --no-cache --no-content-hash --no-source-maps --dist-dir dist",
+    "lint:styles": "stylelint \"src/**/*.scss\"",
+    "start": "parcel serve public/index.html --port 3085 --no-cache --no-source-maps --dist-dir dist",
+    "start:styles": "parcel watch src/ui/styles/*.scss --no-cache --no-source-maps --dist-dir dist"
+  },
+  "dependencies": {
+    "preact": "^10.5.14"
+  },
+  "devDependencies": {
+    "@parcel/transformer-inline-string": "^2.0.0-beta.3.1",
+    "@parcel/transformer-sass": "2.0.0-nightly.778",
+    "@testing-library/preact": "^2.0.1",
+    "browser-sync": "^2.27.4",
+    "postcss": "^8.2.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-sass-guidelines": "^8.0.0"
+  }
+}

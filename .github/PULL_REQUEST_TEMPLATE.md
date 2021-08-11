@@ -13,11 +13,11 @@ Provide information about the environment and the path to verify the behavior.
 `What scope this PR changes?`
 
 - [ ] General
-- [ ] CI
-- [ ] Core
+- [ ] Apps - Web
+- [ ] Apps - Voice Server
+- [ ] Apps - Instrumentation
 - [ ] Tests
-- [ ] Infrastructure
-- [ ] Fonoster API
+- [ ] CI
 
 `I agree`
 

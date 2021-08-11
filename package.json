@@ -1,25 +1,29 @@
 {
-  "name": "roxanne",
+  "name": "rox",
   "version": "1.0.0",
+  "private": true,
   "license": "MIT",
   "author": {
     "name": "Efra Peralta",
     "email": "efra23peralta@gmail.com",
     "url": "https://efrainperalta.com/"
   },
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "build": ".scripts/run build",
-    "ci:build": ".scripts/run patch && yarn build",
+    "apps:voice": "yarn workspace @rox/voice",
+    "apps:web": "yarn workspace @rox/web",
+    "build": ".scripts/run web:build",
     "fix:styles": "yarn lint:styles --fix",
     "git:branch": ".scripts/run branch-name",
     "git:pre-commit": ".scripts/run lint",
     "git:pre-commit-msg": "commitlint --edit $1",
     "lint:check": "eslint . --ext .js,.ts,.tsx",
     "lint:format": "prettier \"./**/*.{ts,tsx,js}\" --check",
-    "lint:styles": "stylelint \"src/**/*.scss\"",
     "lint:ts:check": "tsc --noEmit",
     "prepare": "husky install",
-    "start": ".scripts/run start",
+    "start": "concurrently -n \"Roxanne,Voice\" \".scripts/run web:start\" \".scripts/run voice:start\"",
     "test": "jest --forceExit --detectOpenHandles --watch"
   },
   "commitlint": {
@@ -27,27 +31,13 @@
       "@commitlint/config-conventional"
     ]
   },
-  "browserslist": [
-    "> 0.2%",
-    "not dead"
-  ],
-  "dependencies": {
-    "buffer-from": "^1.1.2",
-    "preact": "^10.5.14",
-    "readable-stream": "^3.6.0"
-  },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
-    "@parcel/transformer-inline-string": "^2.0.0-beta.3.1",
-    "@parcel/transformer-sass": "2.0.0-nightly.778",
-    "@testing-library/preact": "^2.0.1",
     "@types/jest": "^26.0.23",
     "@types/node": "^16.4.5",
-    "@types/readable-stream": "^2.3.11",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
-    "browser-sync": "^2.27.4",
     "concurrently": "^6.2.0",
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
@@ -57,15 +47,17 @@
     "husky": "^7.0.1",
     "jest": "^27.0.6",
     "parcel": "^2.0.0-beta.3.1",
-    "postcss": "^8.2.1",
     "prettier": "^2.3.0",
     "rimraf": "^3.0.2",
-    "stylelint": "^13.13.1",
-    "stylelint-config-sass-guidelines": "^8.0.0",
     "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
   },
   "engines": {
     "node": "<=14.x.x"
+  },
+  "targets": {
+    "default": {
+      "includeNodeModules": true
+    }
   }
 }

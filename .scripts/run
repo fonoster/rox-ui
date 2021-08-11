@@ -5,15 +5,11 @@ set -e
 BASE_DIR=$(dirname "$0")
 
 # Import sources function
-source "$BASE_DIR/bin/import"
+source "$BASE_DIR/bin/import.sh"
 
 # Import scripts
 import "$BASE_DIR/**/*"
-
-# Globals
-WIDGET_PATH="src/widget.ts"
-ENTRY_POINT_PATH="public/index.html"
-STYLES_PATH="src/ui/styles/*.scss"
+import "$BASE_DIR/**/**/*"
 
 INPUT=$1
 shift
@@ -23,17 +19,17 @@ COMMAND=$(echo "$INPUT" | awk '{print tolower($0)}')
 info "Development Management (Roxanne Assistant) - Current OS: $OS"
 
 case $COMMAND in
-staging | deploy:staging)
-  prepare_staging
+web:start)
+  web_start
   ;;
-production | deploy:production | prod)
-  prepare_production
+web:build)
+  web_build
   ;;
-start | dev | watch | develop)
-  development "$ENTRY_POINT_PATH" "$STYLES_PATH"
+voice:start)
+  echo "Not implemented"
   ;;
-build)
-  build "$WIDGET_PATH" "$STYLES_PATH"
+voice:build)
+  echo "Not implemented"
   ;;
 patch | patch-line)
   patch_line

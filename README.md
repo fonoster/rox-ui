@@ -11,14 +11,14 @@ You just need to add the script on your website or app with the `key` provided b
 > It is important not to remove the `id` from the script as it is used as an identity in the DOM.
 
 ```html
-  <!-- Fonoster widget begin -->
+  <!-- Fonoster assistant begin -->
   <script
-    id="pf-widget"
+    id="rox-script"
     type="text/javascript"
-    src="https://efraa.github.io/assistant/widget.js?key=1413d7-031-13bWa28"
+    src="https://efraa.github.io/assistant/web.js?key=1413d7-031-13bWa28"
   >
   </script>
-  <!-- Fonoster widget end -->
+  <!-- Fonoster assistant end -->
 ```
 
 ### Technical details
@@ -42,17 +42,17 @@ You just need to add the script on your website or app with the `key` provided b
 
 #### DOM Events
 
-Roxanne Assistant provides custom events for most widget actions. Generally,
-these are loaded with data related to the event and the current state of the widget.
+Roxanne Assistant provides custom events for most assistant actions. Generally,
+these are loaded with data related to the event and the current state of the assistant.
 
 > To view all available events, see: [Roxanne - DOM Events](/src/services/event-bus/EventName.ts)
 
 Example:
 
 ```javascript
-const widget = document.getElementById("__pf_assistant_widget__");
+const assistant = document.getElementById("__rox_assistant__");
 
-widget.addEventListener("pf.assistant.start", e => console.log(e.detail));
+assistant.addEventListener("rox.assistant.start", e => console.log(e.detail));
 ```
 
 #### Supported Browsers
@@ -95,6 +95,7 @@ The following tools should be installed before starting:
 
 ### Contributors
 
+- [Pedro Sanders](https://github.com/psanders)
 - [Efra Peralta](https://github.com/Efraa)
 
 ### License
