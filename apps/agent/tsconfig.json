@@ -6,5 +6,10 @@
   "extends": "../../tsconfig.json",
   "include": [
     "src"
+  ],
+  "references": [
+    {
+      "path": "../instrumentation"
+    }
   ]
 }

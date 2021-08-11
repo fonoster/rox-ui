@@ -2,5 +2,14 @@
 {
   "name": "@rox/voice",
   "version": "1.0.0",
-  "main": "dist/index"
+  "main": "dist/index",
+  "dependencies": {
+    "ws": "^8.1.0"
+  },
+  "devDependencies": {
+    "@fonos/googletts": "0.1.9-alpha.0",
+    "@fonos/sdk": "0.1.9-alpha.0",
+    "@fonos/voice": "0.1.9-alpha.0",
+    "@types/ws": "^7.4.7"
+  }
 }
