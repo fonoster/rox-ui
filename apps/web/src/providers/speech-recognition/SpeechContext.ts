@@ -1,7 +1,7 @@
 import { createContext } from 'preact'
 import type React from 'preact/compat'
 
-import { ErrorNotImplemented, Intent } from '../../services/speech-recognition'
+import { Intent } from '../../services/speech-recognition'
 
 export interface ISpeechState {
   /**
@@ -33,9 +33,9 @@ export const SpeechContext = createContext<ISpeechContext>({
     history: [],
   },
   setData() {
-    throw new ErrorNotImplemented()
+    // throw new ErrorNotImplemented()
   },
   initialize() {
-    throw new ErrorNotImplemented()
+    // throw new ErrorNotImplemented()
   },
 })

@@ -1,7 +1,7 @@
 import type {
   Intent,
   SpeechError,
-  SpeechPermission,
+  // SpeechPermission,
 } from '../../speech-recognition'
 import { EventName } from '../EventName'
 import { AssistantEvent } from './Event'
@@ -16,7 +16,7 @@ import { AssistantEvent } from './Event'
  * @author Fonoster
  */
 export const speechStartEvent = new AssistantEvent<{
-  speechPermission: SpeechPermission
+  speechPermission: any // SpeechPermission
   audioContext: AudioContext
 }>(EventName.SPEECH_START)
 
