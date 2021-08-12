@@ -19,6 +19,8 @@ web_start() {
     cp $ENV_CONFIG_FILE $CONFIG_FILE
   fi
 
+  rimraf "$APP/dist"
+
   concurrently -n "Styles,Typescript,Browsersync" \
     "yarn apps:web start:styles" \
     "yarn apps:web start" \
