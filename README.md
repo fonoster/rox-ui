@@ -52,9 +52,7 @@ The following tools should be installed before starting:
 - Yarn package manager
 - Node <=14
 
-#### Getting Started
-
-**Initial setup**
+#### Getting Started - Initial setup
 
 ```sh
 yarn setup
