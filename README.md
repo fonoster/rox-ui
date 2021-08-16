@@ -54,15 +54,55 @@ The following tools should be installed before starting:
 
 #### Getting Started
 
-- Run `yarn setup`
-  * > Now you can use `fonos` and `ngrok`, previously installed in the setup command.
-- Next, obtain a set of credentials from here: [Github Auth.](https://github.com/login/oauth/authorize?client_id=176eada057a4bbd96736)
-- Login using the fonos credentials with `fonos auth:login`
-- Update `apps/voice/google_credentials.json` with your Google TTS credentials.
-- Start Voice server and ngrok `yarn start:voice`
-- Open [Ngrok Inspector](http://localhost:4040/) and use Ngrok's url to update the webhook in your Fonos number using `fonos numbers:update $NUMBER_ID`.
-- Start Web assistant in a separate console `yarn start:web`
-- Done!
+**Initial setup**
+
+```sh
+yarn setup
+```
+
+> Now you can use `fonos` and `ngrok`, previously installed in the setup command.
+
+**Fonoster credentials**
+
+Obtain a set of credentials from here: [Github Auth.](https://github.com/login/oauth/authorize?client_id=176eada057a4bbd96736)
+
+**Fonos login**
+
+Login using the fonos credentials with:
+
+```sh
+fonos auth:login
+```
+
+**Google Credentials**
+
+Update `apps/voice/google_credentials.json` with your Google TTS credentials.
+
+**Voice Server**
+
+Start Voice server and ngrok.
+
+```sh
+yarn start:voice
+```
+
+**Update the Fonos webhook**
+
+Open [Ngrok Inspector](http://localhost:4040/) and use Ngrok's url to update the webhook in your Fonos number using:
+
+```sh
+fonos numbers:update $NUMBER_ID
+```
+
+**Roxanne assistant - Web**
+
+Start Web assistant in a separate console.
+
+```sh
+yarn start:web
+```
+
+**Done! ✅**
 
 ### Contributors
 
