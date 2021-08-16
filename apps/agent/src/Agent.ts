@@ -9,7 +9,7 @@ import { UserAgent, UserAgentDelegate } from 'sip.js'
 import { Config } from './types.js'
 import { createInviter, getAudio, getUserAgentOptions } from './utils.js'
 
-export class Agent {
+export class RoxanneAgent {
   userAgent: UserAgent
   instrumentation: InstrumentationData
   audioElement: HTMLAudioElement

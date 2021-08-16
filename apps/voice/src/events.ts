@@ -42,7 +42,7 @@ export class EventsServer {
     console.log('Started events server on port %s', this.port)
   }
 
-  getConnection(clientId: string): WebSocket {
+  getConnection(clientId: string): WebSocket | undefined {
     return this.clientConnections.get(clientId)
   }
 

@@ -15,17 +15,18 @@
       "ESNext",
       "DOM"
     ],
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitReturns": false,
     "pretty": true,
     "removeComments": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": false,
-    "target": "es5"
+    "target": "esnext"
   },
   "exclude": [
     "**/node_modules",

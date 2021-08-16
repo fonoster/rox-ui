@@ -24,7 +24,7 @@ web_start() {
   concurrently -n "Styles,Typescript,Browsersync" \
     "yarn apps:web start:styles" \
     "yarn apps:web start" \
-    "browser-sync start --proxy localhost:3085 --port 3080 --files $APP"
+    "browser-sync start --proxy localhost:3085 --port 3080 --files $APP --no-ui"
 
   exit 0
 }

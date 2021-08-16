@@ -40,41 +40,6 @@ You just need to add the script on your website or app with the `key` provided b
 | [Parcel](https://v2.parceljs.org/)  | Bundler and development environment runner                  |
 | Bash scripts                        | Used for development management                             |
 
-#### DOM Events
-
-Roxanne Assistant provides custom events for most assistant actions. Generally,
-these are loaded with data related to the event and the current state of the assistant.
-
-> To view all available events, see: [Roxanne - DOM Events](/src/services/event-bus/EventName.ts)
-
-Example:
-
-```javascript
-const assistant = document.getElementById("__rox_assistant__");
-
-assistant.addEventListener("rox.assistant.start", e => console.log(e.detail));
-```
-
-#### Supported Browsers
-
-Roxanne supports most modern browsers on mobile and desktop.
-
-> This represents only a general part of the supported and tested browsers.
-
-In general, any browser that supports the necessary APIs that Roxanne uses
-is supported but unknown. We did a great job with polyfills to support
-their majority, but this will depend on the available APIs.
-
-| Browser                                       | Version | Supported              |
-|-----------------------------------------------|---------|:----------------------:|
-| Chrome                                        | 53+     | ✅                     |
-| Edge                                          | 12+     | ✅                     |
-| Firefox                                       | 42+     | ✅                     |
-| Safari                                        | 11+     | ✅                     |
-| IE                                            | ALL     | `Not supported`        |
-| Opera Mini                                    | ALL     | `Not supported`        |
-| Baidu Browser, Alibaba Browser, Others.       | ALL     | `Unknown`              |
-
 ### Development
 
 > These instructions will get you a copy of the project up and
@@ -89,8 +54,16 @@ The following tools should be installed before starting:
 
 #### Getting Started
 
-- Install deps `yarn install`
-- Run `yarn start`
+- Run `yarn setup`
+- Next, obtain a set of credentials from here: [Github Auth.](https://github.com/login/oauth/authorize?client_id=176eada057a4bbd96736)
+
+> Now you can use `fonos` and `ngrok`, previously installed in the setup command.
+
+- Login using the fonos credentials with `fonos auth:login`
+- Update `apps/voice/google_credentials.json` with your Google TTS credentials.
+- Start Voice server and ngrok `yarn start:voice`
+- Open [Ngrok Inspector](http://localhost:4040/) and use Ngrok's url to update the webhook in your Fonos number using `fonos numbers:update $NUMBER_ID`.
+- Start Web assistant in a separate console `yarn start:web`
 - Done!
 
 ### Contributors
@@ -100,4 +73,4 @@ The following tools should be installed before starting:
 
 ### License
 
-Copyright (C) 2021 by [Fonoster Inc.](https://fonoster.com/) MIT License.
+Copyright (C) 2021 by [Fonoster Inc.](https://fonoster.com/)

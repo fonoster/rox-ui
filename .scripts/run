@@ -26,10 +26,13 @@ web:build)
   web_build
   ;;
 voice:start)
-  echo "Not implemented"
+  voice_start
   ;;
 voice:build)
-  echo "Not implemented"
+  voice_build
+  ;;
+setup)
+  setup
   ;;
 patch | patch-line)
   patch_line

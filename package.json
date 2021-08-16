@@ -23,7 +23,9 @@
     "lint:format": "prettier \"./**/*.{ts,tsx,js}\" --check",
     "lint:ts:check": "tsc --noEmit",
     "prepare": "husky install",
-    "start": "concurrently -n \"Roxanne,Voice\" \".scripts/run web:start\" \".scripts/run voice:start\"",
+    "setup": ".scripts/run setup",
+    "start:voice": ".scripts/run voice:start",
+    "start:web": ".scripts/run web:start",
     "test": "jest --forceExit --detectOpenHandles --watch"
   },
   "commitlint": {
@@ -34,6 +36,8 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@parcel/transformer-inline-string": "^2.0.0-beta.3.1",
+    "@parcel/transformer-sass": "2.0.0-rc.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^16.4.5",
     "@typescript-eslint/eslint-plugin": "^4.23.0",

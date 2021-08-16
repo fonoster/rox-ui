@@ -1,8 +1,12 @@
-
 {
   "name": "@rox/voice",
   "version": "1.0.0",
+  "license": "UNLICENSED",
   "main": "dist/index",
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "start": "node dist/index.js"
+  },
   "dependencies": {
     "ws": "^8.1.0"
   },

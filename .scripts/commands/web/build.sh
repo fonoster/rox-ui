@@ -1,7 +1,7 @@
 #!/bin/bash
 
 web_build() {
-  info "Building application and resources..."
+  info "Building web application and resources..."
 
   rimraf "apps/web/dist"
 

@@ -23,14 +23,17 @@ function delay(ms = 4000) {
 
 // Inside this method with have all the media controlling logic
 voiceServer.listen(async (req, res) => {
-  console.log(req)
+  console.log(req, res)
 
   const ws = events.getConnection(req.callerNumber)
+
+  if (!ws) throw new Error('Socket connection not found')
+
   const eventEmitter = new EventEmitter(ws)
 
   eventEmitter.send(Events.ANSWERED)
 
-  await res.say('Hi. I am using the google text to speech voice')
+  // await res.say('Hi. I am using the google text to speech voice')
 
   // Adding delay to simulate real conversation
   await delay()
@@ -54,7 +57,7 @@ voiceServer.listen(async (req, res) => {
     data: 'Anything you want',
   })
 
-  await res.say('Good bye!')
+  // await res.say('Good bye!')
 
   // Final event must sent before hangup
   eventEmitter.send(Events.HANGUP)
@@ -62,5 +65,5 @@ voiceServer.listen(async (req, res) => {
   // Cleaning up must happing before hangup
   events.removeConnection(req.callerNumber)
 
-  await res.hangup()
+  // await res.hangup()
 })
