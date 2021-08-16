@@ -55,10 +55,8 @@ The following tools should be installed before starting:
 #### Getting Started
 
 - Run `yarn setup`
+  * > Now you can use `fonos` and `ngrok`, previously installed in the setup command.
 - Next, obtain a set of credentials from here: [Github Auth.](https://github.com/login/oauth/authorize?client_id=176eada057a4bbd96736)
-
-> Now you can use `fonos` and `ngrok`, previously installed in the setup command.
-
 - Login using the fonos credentials with `fonos auth:login`
 - Update `apps/voice/google_credentials.json` with your Google TTS credentials.
 - Start Voice server and ngrok `yarn start:voice`

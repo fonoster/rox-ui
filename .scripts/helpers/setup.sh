@@ -4,11 +4,12 @@ setup() {
   local VOICE_APP="apps/voice"
   local GOOGLE_CREDENTIALS="$VOICE_APP/google_credentials.json"
 
-  info "Installing Fonos command-line and Ngrok..."
-  yarn global add @fonos/ctl ngrok
+  install_g_package @fonos/ctl ngrok
 
-  info "Installing local dependencies..."
-  yarn install
+  if [[ ! -d node_modules ]]; then
+    info "Installing local dependencies..."
+    yarn install
+  fi
 
   if [[ ! -f $GOOGLE_CREDENTIALS ]]; then
     info "Copying the Google credentials template... 🔧"
