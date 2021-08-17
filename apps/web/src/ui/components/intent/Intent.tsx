@@ -1,6 +1,6 @@
 import { h, JSX } from 'preact'
 
-import { Intent } from '../../../services/speech-recognition'
+import { Intent } from '../../../services/voice'
 
 export interface IntentProps extends JSX.HTMLAttributes<HTMLDivElement> {
   intent: Omit<Intent, 'id'>

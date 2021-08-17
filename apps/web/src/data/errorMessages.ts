@@ -1,3 +1,5 @@
+import { APP_CONFIG } from '../config'
+
 export const ERROR_MESSAGES = {
   ID_MISSING: 'ID is missing from widget script',
   KEY_MISSING: 'Key is missing from widget',
@@ -11,4 +13,5 @@ export const ERROR_MESSAGES = {
     'It seems that <Navigator /> has no children. You must add at least one child',
   OUTSIDE_OF_PROVIDER:
     "Couldn't find a context. Is your component outside a <Screen />?",
+  AUDIO_LOADED: `You cannot have an audio with the id, use a different id for ${APP_CONFIG.AUDIO_ID}`,
 }

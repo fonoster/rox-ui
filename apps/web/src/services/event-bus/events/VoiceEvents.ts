@@ -2,7 +2,7 @@ import type {
   Intent,
   SpeechError,
   // SpeechPermission,
-} from '../../speech-recognition'
+} from '../../voice'
 import { EventName } from '../EventName'
 import { AssistantEvent } from './Event'
 

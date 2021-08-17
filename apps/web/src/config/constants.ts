@@ -2,6 +2,7 @@ import appConfig from '../../app.config.json'
 
 export const APP_CONFIG = {
   ASSISTANT_ID: '__rox_assistant__',
+  AUDIO_ID: '__rox_assistant_audio__',
   SCRIPT_ID: 'rox-script',
   PUBLIC_URL: appConfig.public_url,
 }

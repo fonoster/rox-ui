@@ -1,7 +1,7 @@
 import { createContext } from 'preact'
 import type React from 'preact/compat'
 
-import { Intent } from '../../services/speech-recognition'
+import { Intent } from '../../services/voice'
 
 export interface ISpeechState {
   /**

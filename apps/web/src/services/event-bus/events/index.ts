@@ -1,2 +1,2 @@
 export * from './AssistantEvents'
-export * from './SpeechEvents'
+export * from './VoiceEvents'

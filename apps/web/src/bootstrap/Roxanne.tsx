@@ -61,17 +61,30 @@ export class Roxanne {
    * @description Create a new element in the DOM to load the instance.
    */
   private renderAssistant(id = APP_CONFIG.ASSISTANT_ID) {
+    const audio = this.createAudio()
+
     const assistant = document.createElement('div')
     assistant.id = id
 
     if (this.assistantIsLoaded(assistant.id))
       throw new Error(ERROR_MESSAGES.ASSISTANT_IS_LOADED)
 
+    assistant.appendChild(audio)
     document.body.appendChild(assistant)
 
     render(this.app, assistant!)
 
     return assistant
+  }
+
+  private createAudio() {
+    const audio = document.createElement('audio')
+
+    audio.controls = true
+    audio.style.display = 'none'
+    audio.id = APP_CONFIG.AUDIO_ID
+
+    return audio
   }
 
   /**

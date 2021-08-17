@@ -7,14 +7,14 @@ import Socket from 'simple-websocket'
 import { UserAgent, UserAgentDelegate } from 'sip.js'
 
 import { Config } from './types.js'
-import { createInviter, getAudio, getUserAgentOptions } from './utils.js'
+import { createInviter, getAudio, getUserAgentOptions } from './utils'
 
 export class RoxanneAgent {
-  userAgent: UserAgent
-  instrumentation: InstrumentationData
-  audioElement: HTMLAudioElement
-  wsClient: Socket
-  eventEmitter: EventEmitter
+  private userAgent: UserAgent
+  private instrumentation: InstrumentationData
+  private audioElement: HTMLAudioElement
+  private wsClient: Socket
+  private eventEmitter: EventEmitter
 
   constructor(config: Config) {
     // Obtain everything Rox needs to connect to the backend
@@ -59,28 +59,30 @@ export class RoxanneAgent {
       inviter.invite()
 
       // Events server connection
-      const wsClient = new Socket(this.instrumentation.eventsServer)
-      wsClient.on('connect', () => {
+      this.wsClient = new Socket(this.instrumentation.eventsServer)
+      this.wsClient.on('connect', () => {
         // Once we successfully connect we send the clientId
         // which will be use to track the session and send events
-        wsClient.send(
+        this.wsClient.send(
           JSON.stringify({
             clientId: this.instrumentation.clientUsername,
           })
         )
       })
 
-      wsClient.on('data', (data: string) => {
+      this.wsClient.on('data', (data: string) => {
         this.eventEmitter.emit('event', data)
       })
-    } catch (e) {
-      console.error(e)
+    } catch (error) {
+      console.error(error)
+
+      throw error
     }
   }
 
   // TODO: We need to also destroy the websocket connection
   async disconnect() {
-    this.userAgent.stop()
+    await this.userAgent.stop()
   }
 
   onMessage(callback: Function) {

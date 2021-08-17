@@ -9,5 +9,10 @@
   "include": [
     "src",
     "app.config.json"
+  ],
+  "references": [
+    {
+      "path": "../agent"
+    }
   ]
 }
