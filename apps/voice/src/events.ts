@@ -1,3 +1,4 @@
+import logger from '@fonos/logger'
 import WebSocket from 'ws'
 
 export enum Events {
@@ -22,13 +23,13 @@ export class EventsServer {
 
   start() {
     this.wss.on('connection', ws => {
-      console.log('Incoming client connection')
+      logger.verbose('incoming client connection')
       ws.on('message', data => {
         // Once we receive the first and only message from client we
         // save the client in the clientConnections map
         const clientId = JSON.parse(data.toString()).clientId
         this.clientConnections.set(clientId, ws)
-        console.log('Added clientId: %s to connection list', clientId)
+        logger.verbose(`added clientId: ${clientId} to the list of connections`)
       })
 
       ws.send(
@@ -39,7 +40,7 @@ export class EventsServer {
       )
     })
 
-    console.log('Started events server on port %s', this.port)
+    logger.info(`started events server on port ${this.port}`)
   }
 
   getConnection(clientId: string): WebSocket | undefined {

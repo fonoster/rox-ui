@@ -8,12 +8,12 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "ws": "^8.1.0"
+    "ws": "^8.1.0",
+    "@fonos/googletts": "0.1.11-alpha.4",
+    "@fonos/sdk": "0.1.11-alpha.7",
+    "@fonos/voice": "0.1.11-alpha.4"
   },
   "devDependencies": {
-    "@fonos/googletts": "0.1.9-alpha.0",
-    "@fonos/sdk": "0.1.9-alpha.0",
-    "@fonos/voice": "0.1.9-alpha.0",
     "@types/ws": "^7.4.7"
   }
 }

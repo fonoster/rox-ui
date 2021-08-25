@@ -23,13 +23,13 @@ export function getInstrumentationData(
    * 4- Fake instrumentation data
    */
   return {
-    clientDisplayName: 'Ugly Roxanne',
+    clientDisplayName: 'Pretty Roxanne',
     clientUsername: '1001',
     clientSecret: '1234',
-    clientAOR: 'sip:1001@roxanne.fonoster.io',
+    clientAOR: 'sip:1001@cola.fonoster.io',
     signalServer: 'ws://sip.fonoster.io:5062',
     eventsServer: 'ws://localhost:3001',
     targetAOR: 'sip:ast@node1',
-    didInfo: '9198972120',
+    didInfo: '9842753568',
   }
 }

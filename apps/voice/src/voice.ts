@@ -1,4 +1,5 @@
 import GoogleTTS from '@fonos/googletts'
+import logger from '@fonos/logger'
 import { VoiceServer } from '@fonos/voice'
 
 import { EventEmitter, Events, EventsServer } from './events'
@@ -23,7 +24,7 @@ function delay(ms = 4000) {
 
 // Inside this method with have all the media controlling logic
 voiceServer.listen(async (req, res) => {
-  console.log(req, res)
+  logger.verbose(JSON.stringify(req, null, ' '))
 
   const ws = events.getConnection(req.callerNumber)
 
@@ -33,7 +34,7 @@ voiceServer.listen(async (req, res) => {
 
   eventEmitter.send(Events.ANSWERED)
 
-  // await res.say('Hi. I am using the google text to speech voice')
+  await res.say('Hi. I am using the google text to speech voice')
 
   // Adding delay to simulate real conversation
   await delay()
