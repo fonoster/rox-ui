@@ -89,7 +89,11 @@ yarn start:voice
 Open [Ngrok Inspector](http://localhost:4040/) and use Ngrok's url to update the webhook in your Fonos number using:
 
 ```sh
-fonos numbers:update $NUMBER_ID
+# List your fonos numbers and copy the 'Ref ID'
+fonos numbers:list
+
+# Use the 'Ref ID' to update the webhook with the ngrok URL
+fonos numbers:update $REF_ID
 ```
 
 **Roxanne assistant - Web**
