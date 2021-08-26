@@ -1,6 +1,6 @@
 import { h, JSX } from 'preact'
 
-import { Intent } from '../../../services/voice'
+import { Intent } from '../../../services/voice-manager'
 
 export interface IntentProps extends JSX.HTMLAttributes<HTMLDivElement> {
   intent: Omit<Intent, 'id'>

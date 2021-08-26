@@ -1,6 +1,7 @@
 import { Fragment, FunctionalComponent, h } from 'preact'
 import { useState } from 'preact/hooks'
 
+import { VoiceProvider } from '../providers/voice-recognition'
 import { visibilityEvent } from '../services/event-bus'
 import { BoxPortal } from '../ui/components/box'
 import { LauncherPortal } from '../ui/components/launcher'
@@ -28,7 +29,11 @@ export const App: FunctionalComponent<AppProps> = () => {
 
   return (
     <Fragment>
-      <BoxPortal {...params}>{isOpen && <Router />}</BoxPortal>
+      <BoxPortal {...params}>
+        <VoiceProvider>
+          <Router />
+        </VoiceProvider>
+      </BoxPortal>
       <LauncherPortal {...params} />
     </Fragment>
   )

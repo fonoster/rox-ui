@@ -1,70 +1,66 @@
-import type {
-  Intent,
-  SpeechError,
-  // SpeechPermission,
-} from '../../voice'
+import type { Intent, VoiceError } from '../../voice-manager'
 import { EventName } from '../EventName'
 import { AssistantEvent } from './Event'
 
 /**
- * Speech Start Event
+ * Voice Start Event
  *
- * @description Fired when the speech recognition service has begun
+ * @description Fired when the voice recognition service has begun
  * listening to incoming audio with intent to recognize grammars
  * associated with the current context.
  *
  * @author Fonoster
  */
-export const speechStartEvent = new AssistantEvent<{
-  speechPermission: any // SpeechPermission
+export const voiceStartEvent = new AssistantEvent<{
+  voicePermission: any // VoicePermission
   audioContext: AudioContext
-}>(EventName.SPEECH_START)
+}>(EventName.VOICE_START)
 
 /**
- * Speech Stop Event
+ * Voice Stop Event
  *
- * @description Fired when the speech recognition service has disconnected.
+ * @description Fired when the voice recognition service has disconnected.
  *
  * @author Fonoster
  */
-export const speechStopEvent = new AssistantEvent<{
+export const voiceStopEvent = new AssistantEvent<{
   audioContext: AudioContext
-}>(EventName.SPEECH_STOP)
+}>(EventName.VOICE_STOP)
 
 /**
- * Speech Pause Event
+ * Voice Pause Event
  *
- * @description Fired when speech recognized by the speech recognition
+ * @description Fired when voice recognized by the voice recognition
  * service is temporarily has stopped being detected.
  *
  * @author Fonoster
  */
-export const speechPauseEvent = new AssistantEvent<{ isStreaming: boolean }>(
-  EventName.SPEECH_PAUSE
+export const voicePauseEvent = new AssistantEvent<{ isStreaming: boolean }>(
+  EventName.VOICE_PAUSE
 )
 
 /**
- * Speech Resume Event
+ * Voice Resume Event
  *
- * @description Fired when speech recognized by the speech
+ * @description Fired when voice recognized by the voice
  * recognition service is detected again.
  *
  * @author Fonoster
  */
-export const speechResumeEvent = new AssistantEvent<{ isStreaming: boolean }>(
-  EventName.SPEECH_RESUME
+export const voiceResumeEvent = new AssistantEvent<{ isStreaming: boolean }>(
+  EventName.VOICE_RESUME
 )
 
 /**
- * Speech Intents Event
+ * Voice Intents Event
  *
- * @description Fired when the speech service returns a result,
+ * @description Fired when the voice service returns a result,
  * a word or phrase has been positively recognized and this
  * has been communicated back to the app.
  *
  * @author Fonoster
  */
-export const speechIntentsEvent = new AssistantEvent<{
+export const voiceIntentsEvent = new AssistantEvent<{
   intents: Intent[]
-  error?: SpeechError
-}>(EventName.SPEECH_INTENTS)
+  error?: VoiceError
+}>(EventName.VOICE_INTENTS)

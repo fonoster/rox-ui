@@ -1,13 +1,14 @@
 import { RoxanneAgent } from '@rox/agent'
 
+import { getAccessKey } from '../../helpers'
 import type { OnIntentsCallback, OnWaitingCallback } from './types'
 
-export class Voice {
+export class VoiceManager {
   private agent: RoxanneAgent
 
-  constructor(instrumentationKey: string, audioElementId: string) {
+  constructor(audioElementId: string) {
     this.agent = new RoxanneAgent({
-      instrumentationKey,
+      instrumentationKey: getAccessKey(),
       audioElementId,
     })
   }
@@ -15,8 +16,8 @@ export class Voice {
   /**
    * Start Recognition
    *
-   * @description Starts the speech recognition service listening to incoming audio
-   * with intent to recognize grammars associated with the current SpeechRecognition.
+   * @description Starts the voice recognition service listening to incoming audio
+   * with intent to recognize grammars associated with the current VoiceRecognition.
    */
   public async start(): Promise<void> {
     try {
@@ -31,7 +32,7 @@ export class Voice {
    */
   public onIntents(cb: OnIntentsCallback): void {
     this.agent.onMessage(data => {
-      //   speechIntentsEvent.dispatch({
+      //   voiceIntentsEvent.dispatch({
       //     intents,
       //     error,
       //   })
@@ -45,16 +46,16 @@ export class Voice {
    */
   public onWaiting(cb: OnWaitingCallback): void {
     console.log(cb)
-    // speechAPI.onWaiting(cb)
+    // voiceAPI.onWaiting(cb)
   }
 
   /**
    * Stop recognition
    *
-   * @description Stops the speech recognition service from listening to incoming audio.
+   * @description Stops the voice recognition service from listening to incoming audio.
    */
   public async stop(): Promise<void> {
     await this.agent.disconnect()
-    // await speechAPI.closeConnection()
+    // await voiceAPI.closeConnection()
   }
 }

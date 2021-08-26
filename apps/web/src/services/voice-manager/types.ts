@@ -12,11 +12,11 @@ export interface Intent {
   }
 }
 
-export type SpeechError = {
+export type VoiceError = {
   statusCode: number
   message: string
 }
 
-export type OnIntentsCallback = (intents: Intent[], error?: SpeechError) => void
+export type OnIntentsCallback = (intents: Intent[], error?: VoiceError) => void
 
 export type OnWaitingCallback = (isWaiting: boolean) => void
