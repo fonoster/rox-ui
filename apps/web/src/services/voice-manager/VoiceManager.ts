@@ -1,16 +1,18 @@
-import { RoxanneAgent } from '@rox/agent'
+import WPhone from 'wphone'
 
 import { getAccessKey } from '../../helpers'
+import { createWPhoneConfig } from '../../helpers/phoneConfig'
+import { getInstrumentation } from '../../instrumentation/client'
+import EventsClient from './EventsClient'
 import type { OnWaitingCallback } from './types'
 
 export class VoiceManager {
-  private agent: RoxanneAgent
+  private agent: WPhone
+  audioElementId: string
+  eventsClient: EventsClient
 
   constructor(audioElementId: string) {
-    this.agent = new RoxanneAgent({
-      instrumentationKey: getAccessKey(),
-      audioElementId,
-    })
+    this.audioElementId = audioElementId
   }
 
   /**
@@ -21,9 +23,32 @@ export class VoiceManager {
    */
   public async start(): Promise<void> {
     try {
+      const instrumentation = await getInstrumentation(getAccessKey())
+      console.log('instrumentation = ' + JSON.stringify(instrumentation))
+      console.log('audioElementId = ' + this.audioElementId)
+
+      const config = createWPhoneConfig(instrumentation, this.audioElementId)
+      this.agent = new WPhone(config)
+
+      this.agent.on('error', e => {
+        console.log('yyyyyyy -> ' + e)
+      })
+
+      this.eventsClient = new EventsClient(
+        instrumentation.eventsServer,
+        instrumentation.clientUsername
+      )
+      await this.eventsClient.connect()
       await this.agent.connect()
-    } catch (error) {
-      console.error(error)
+
+      console.log('XXXXXXX isConnect=' + this.agent.isConnected())
+
+      await this.agent.call({
+        targetAOR: instrumentation.targetAOR,
+        extraHeaders: [`X-DID-Info: ${instrumentation.didInfo}`],
+      })
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -31,14 +56,16 @@ export class VoiceManager {
    * Adds a listener for intent responses from the API.
    */
   public onIntents(cb: Function): void {
-    this.agent.onMessage(data => {
-      //   voiceIntentsEvent.dispatch({
-      //     intents,
-      //     error,
-      //   })
+    if (this.eventsClient) {
+      this.eventsClient.onEvent((data: any) => {
+        //   voiceIntentsEvent.dispatch({
+        //     intents,
+        //     error,
+        //   })
 
-      cb(data)
-    })
+        cb(data)
+      })
+    }
   }
 
   /**
@@ -55,7 +82,13 @@ export class VoiceManager {
    * @description Stops the voice recognition service from listening to incoming audio.
    */
   public async stop(): Promise<void> {
-    await this.agent.disconnect()
-    // await voiceAPI.closeConnection()
+    /*try {
+      if (this.agent.isConnected()) {
+        this.agent.disconnect()
+      }
+      this.eventsClient.disconnect()
+    } catch (e) {
+      console.log(e)
+    }*/
   }
 }

@@ -13,35 +13,38 @@ export const VoiceRecognition = () => {
   const [isListening, setListening] = useState(false)
 
   useEffect(() => {
-    const voice = new VoiceManager(APP_CONFIG.AUDIO_ID)
-    voice.start()
+    const connect = async () => {
+      const voice = new VoiceManager(APP_CONFIG.AUDIO_ID)
+      await voice.start()
 
-    voice.onIntents(data => {
-      if (data.eventName === 'RECOGNIZING' || data.eventName === 'ANSWERED') {
-        setListening(true)
+      voice.onIntents(data => {
+        if (data.eventName === 'RECOGNIZING' || data.eventName === 'ANSWERED') {
+          setListening(true)
+        }
+
+        if (data.eventName === 'RECOGNIZING_FINISHED') {
+          setListening(false)
+        }
+
+        if (data.eventName === 'INTENT') {
+          setData(prev => ({
+            ...prev,
+            intent: data,
+            history: [data, ...Array.from(prev?.history ?? [])] as any,
+          }))
+        }
+
+        if (data.eventName === 'HANGUP') {
+          // voice?.stop()
+          // @TODO Close widget
+        }
+      })
+
+      return () => {
+        voice?.stop()
       }
-
-      if (data.eventName === 'RECOGNIZING_FINISHED') {
-        setListening(false)
-      }
-
-      if (data.eventName === 'INTENT') {
-        setData(prev => ({
-          ...prev,
-          intent: data,
-          history: [data, ...Array.from(prev?.history ?? [])] as any,
-        }))
-      }
-
-      if (data.eventName === 'HANGUP') {
-        // voice?.stop()
-        // @TODO Close widget
-      }
-    })
-
-    return () => {
-      voice?.stop()
     }
+    connect()
   }, [])
 
   if (isListening) {
