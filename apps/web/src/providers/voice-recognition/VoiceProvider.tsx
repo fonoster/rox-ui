@@ -1,8 +1,6 @@
 import { ComponentChildren, h } from 'preact'
 import { useMemo, useState } from 'preact/hooks'
 
-import { APP_CONFIG } from '../../config'
-import { VoiceManager } from '../../services/voice-manager'
 import { IVoiceState, VoiceContext } from './VoiceContext'
 
 export interface VoiceProviderProps {
@@ -30,7 +28,6 @@ export const VoiceProvider = (props: VoiceProviderProps) => {
     () => ({
       data,
       setData,
-      voice: new VoiceManager(APP_CONFIG.AUDIO_ID),
     }),
     [data]
   )

@@ -1,7 +1,7 @@
 import { RoxanneAgent } from '@rox/agent'
 
 import { getAccessKey } from '../../helpers'
-import type { OnIntentsCallback, OnWaitingCallback } from './types'
+import type { OnWaitingCallback } from './types'
 
 export class VoiceManager {
   private agent: RoxanneAgent
@@ -30,7 +30,7 @@ export class VoiceManager {
   /**
    * Adds a listener for intent responses from the API.
    */
-  public onIntents(cb: OnIntentsCallback): void {
+  public onIntents(cb: Function): void {
     this.agent.onMessage(data => {
       //   voiceIntentsEvent.dispatch({
       //     intents,

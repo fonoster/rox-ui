@@ -30,9 +30,7 @@ export const App: FunctionalComponent<AppProps> = () => {
   return (
     <Fragment>
       <BoxPortal {...params}>
-        <VoiceProvider>
-          <Router />
-        </VoiceProvider>
+        <VoiceProvider>{isOpen && <Router />}</VoiceProvider>
       </BoxPortal>
       <LauncherPortal {...params} />
     </Fragment>

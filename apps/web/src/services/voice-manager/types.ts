@@ -4,12 +4,12 @@ export interface Intent {
   icon: string
   description: string
   transcript?: string
-  actions?: {
-    link: {
-      url: string
-      target?: string
-    }
-  }
+  // actions?: {
+  //   link: {
+  //     url: string
+  //     target?: string
+  //   }
+  // }
 }
 
 export type VoiceError = {
