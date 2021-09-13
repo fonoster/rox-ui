@@ -1,4 +1,4 @@
-import type { EventName } from '../../services/event-bus'
+import type { EventName } from '../../web/src/services/event-bus'
 
 declare global {
   interface Window {

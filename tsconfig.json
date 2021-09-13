@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
@@ -12,13 +9,15 @@
     "jsx": "react",
     "jsxFactory": "h",
     "lib": [
-      "ESNext",
-      "DOM"
+      "dom",
+      "esnext"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitReturns": false,
+    "outDir": "dist",
+    "baseUrl": "./apps",
     "pretty": true,
     "removeComments": true,
     "resolveJsonModule": true,
@@ -29,10 +28,11 @@
     "target": "esnext"
   },
   "exclude": [
-    "**/node_modules",
-    "**/dist"
+    "node_modules",
+    "dist"
   ],
   "include": [
+    "apps/**/*",
     "**/app.config.json"
   ]
 }

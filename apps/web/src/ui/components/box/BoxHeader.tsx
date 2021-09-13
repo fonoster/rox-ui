@@ -1,6 +1,6 @@
 import { h } from 'preact'
 
-import { TSetVisibilityProps } from '../../../@types/shared'
+import { TSetVisibilityProps } from '../../../../../@types/shared'
 import { MESSAGES } from '../../../data'
 import { CloseIcon, FonosterLogo } from '../svg'
 

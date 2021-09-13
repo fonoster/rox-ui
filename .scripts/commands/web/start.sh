@@ -19,12 +19,14 @@ web_start() {
     cp $ENV_CONFIG_FILE $CONFIG_FILE
   fi
 
-  rimraf "$APP/dist"
+  rimraf dist
 
-  concurrently -n "Styles,Typescript,Browsersync" \
-    "yarn apps:web start:styles" \
-    "yarn apps:web start" \
-    "browser-sync start --proxy localhost:3085 --port 3080 --files $APP --no-ui"
+  yarn start:webpack
+
+  # concurrently -n "Styles,Typescript,Browsersync" \
+  #   "yarn apps:web start:styles" \
+  #   "yarn apps:web start" \
+  #   "browser-sync start --proxy localhost:3085 --port 3080 --files $APP --no-ui"
 
   exit 0
 }

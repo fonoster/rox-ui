@@ -4,12 +4,12 @@ import { useEffect, useState } from 'preact/hooks'
 import { APP_CONFIG } from '../../../config'
 import { useVoiceRecognition } from '../../../hooks/useVoiceRecognition'
 import { VoiceManager } from '../../../services/voice-manager'
-import { IntentCard } from '../../components/intent'
+// import { IntentCard } from '../../components/intent'
 import { Listening } from '../../components/svg'
 import { Title } from '../../components/text'
 
 export const VoiceRecognition = () => {
-  const { data, setData } = useVoiceRecognition()
+  const { setData } = useVoiceRecognition()
   const [isListening, setListening] = useState(false)
 
   useEffect(() => {
@@ -58,19 +58,19 @@ export const VoiceRecognition = () => {
     )
   }
 
-  if (data.history?.length || data.intent) {
-    return data?.history?.map(() => (
-      <IntentCard
-        key={Date.now()}
-        intent={{
-          title: 'A reminder of company events',
-          icon: '',
-          description: 'Add a reminder to your Google calendar and send email.',
-          transcript: 'You said: “Add reminders”',
-        }}
-      />
-    ))
-  }
+  // if (data.history?.length || data.intent) {
+  //   return data?.history?.map(() => (
+  //     <IntentCard
+  //       key={Date.now()}
+  //       intent={{
+  //         title: 'A reminder of company events',
+  //         icon: '',
+  //         description: 'Add a reminder to your Google calendar and send email.',
+  //         transcript: 'You said: “Add reminders”',
+  //       }}
+  //     />
+  //   ))
+  // }
 
   return <p>Permissions</p>
 }

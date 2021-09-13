@@ -5,7 +5,7 @@ linters() {
   yarn lint:format
   yarn lint:check
   yarn lint:ts:check
-  yarn apps:web lint:styles
+  # yarn apps:web lint:styles
 
   exit 0
 }
